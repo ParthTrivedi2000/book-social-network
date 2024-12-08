@@ -1,4 +1,4 @@
 # Default ignored files
 /shelf/
 /workspace.xml
-/book-network-ui/node_modules
+#/book-network-ui/node_modules
