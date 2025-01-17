@@ -1,8 +1,8 @@
 spring:
   datasource:
-    url: jdbc:postgresql://localhost:5433/book_social_network
-    username: postgres
-    password: 1234567890
+    url: jdbc:postgresql://host.docker.internal:5440/book_social_network
+    username: username
+    password: password
     driver-class-name: org.postgresql.Driver
     hikari:
       maximum-pool-size: 10
