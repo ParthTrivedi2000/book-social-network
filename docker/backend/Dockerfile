@@ -60,7 +60,6 @@ ENV PWD=${PASSWORD}
 CMD java -jar -Dspring.profiles.active=${ACTIVE_PROFILE} -Dspring.datasource.url=${DB_URL} -DSpring.datasource.username=${USER} -DSpring.datasource.password=${PWD} book-network-${JAR_VERSION}.jar
 
 
-
 # Prshant Section
 
 # FROM dvmarques/openjdk-17-jdk-alpine-with-timezone
