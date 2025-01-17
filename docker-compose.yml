@@ -24,7 +24,7 @@ services:
 
  bsn-api:
    container_name: bsn-api
-   image: bsn/bsn:1.0.0
+   image: bsn/bsn:1.0.1
   # #  we can pass environment variable if we want, but since we have already passed default values in dockerfile itself so here is not must to pass.
   #  environment:
   #   - DB_URL

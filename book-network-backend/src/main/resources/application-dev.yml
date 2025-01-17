@@ -17,7 +17,7 @@ spring:
     database: postgresql
     database-platform: org.hibernate.dialect.PostgreSQLDialect
   mail:
-    host: localhost
+    host: host.docker.internal
     port: 1025
     username: parth
     password: parth
@@ -41,7 +41,7 @@ application:
         expiration: 604800000 # 7 days
   mailing:
     frontend:
-      activate-url: http://localhost:3000/activate-account
+      activate-url: http://localhost:8080/activate-account
   file:
     upload:
       photos-output-path: ./uploads
