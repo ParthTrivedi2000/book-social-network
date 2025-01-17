@@ -4,10 +4,13 @@ spring:
     username: postgres
     password: 1234567890
     driver-class-name: org.postgresql.Driver
+    hikari:
+      maximum-pool-size: 10
+      connection-timeout: 30000  # 30 seconds
   jpa:
     hibernate:
       ddl-auto: update
-    show-sql: false
+    show-sql: true
     properties:
       hibernate:
         format-sql: true
@@ -34,6 +37,8 @@ application:
     jwt:
       secret-key: a676d97bca0ad5fa60213194249c48f6b9cc1086f183e3ce5ebf3f3dc754ad42de4df1ca9b82a423d3fe5b18be2f3ce1d62ab4ead81a76079369aa4f5b09b29c0b0639f28516f9df1d5f2aa8024fdaa53e4ac2c7d5bd8c71fab121e90553acdf79ef186e36218e857bdc8b6c5e81ea5f518fb939c70fb0064ba1412eafed9bf1788542c5c5925d4ab5688df7d8616d39860062872e0c841e2b1305b34cc3262541c341c7de4e367d4a7eb8439fe417a6cad7dc7de810f55a129df082f21d2a096c621778fd4850df50f253092f41ffcc92ea781b1b102bd02b293c6062fa8c9ab75d87c943a5e17bf2ba7eac1d99c6d136b0fe24815003c59bc84bcfa1257515
       expiration: 8640000
+      refresh-token:
+        expiration: 604800000 # 7 days
   mailing:
     frontend:
       activate-url: http://localhost:3000/activate-account
