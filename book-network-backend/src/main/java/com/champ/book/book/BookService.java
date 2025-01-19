@@ -45,7 +45,7 @@ public class BookService {
 
     public PageResponse<BookResponse> findAllBooks(int page, int size, Authentication connectedUser) {
         User user = ((User)connectedUser.getPrincipal());
-        Pageable pageable = PageRequest.of(page, size, Sort.by("createdDate").descending());
+        Pageable pageable = PageRequest.of(page, size, Sort.by("createdAt").descending());
         Page<Book> books = bookRepository.findAllDisplayableBooks(pageable, user.getId());
         List<BookResponse> bookResponse = books.stream().map(bookMapper::toBookResponse).toList();
         return new PageResponse<>(
@@ -61,7 +61,7 @@ public class BookService {
 
     public PageResponse<BookResponse> findAllBooksByOwner(int page, int size, Authentication connectedUser) {
         User user = ((User)connectedUser.getPrincipal());
-        Pageable pageable = PageRequest.of(page, size, Sort.by("createdDate").descending());
+        Pageable pageable = PageRequest.of(page, size, Sort.by("createdAt").descending());
         Page<Book> books = bookRepository.findAll(withOwnerId(user.getId()),pageable);
         List<BookResponse> bookResponse = books.stream().map(bookMapper::toBookResponse).toList();
         return new PageResponse<>(
@@ -77,7 +77,7 @@ public class BookService {
 
     public PageResponse<BorrowedBookResponse> findAllBorrowedBooks(int page, int size, Authentication connectedUser) {
         User user = ((User)connectedUser.getPrincipal());
-        Pageable pageable = PageRequest.of(page, size, Sort.by("createdDate").descending());
+        Pageable pageable = PageRequest.of(page, size, Sort.by("createdAt").descending());
         Page<BookTransactionHistory> allBorrowedBooks = transactionHistoryRepository.findAllBorrowedBooks(pageable, user.getId());
         List<BorrowedBookResponse> borrowedBooks = allBorrowedBooks.stream().map(bookMapper:: toBorrowedBookResponse).toList();
         return new PageResponse<>(
@@ -93,7 +93,7 @@ public class BookService {
 
     public PageResponse<BorrowedBookResponse> findAllReturnedBooks(int page, int size, Authentication connectedUser) {
         User user = ((User)connectedUser.getPrincipal());
-        Pageable pageable = PageRequest.of(page, size, Sort.by("createdDate").descending());
+        Pageable pageable = PageRequest.of(page, size, Sort.by("createdAt").descending());
         Page<BookTransactionHistory> allBorrowedBooks = transactionHistoryRepository.findAllReturnedBooks(pageable, user.getId());
         List<BorrowedBookResponse> borrowedBooks = allBorrowedBooks.stream().map(bookMapper:: toBorrowedBookResponse).toList();
         return new PageResponse<>(
@@ -115,6 +115,7 @@ public class BookService {
             throw new OperationNotPermittedException("You can not update the shareable status. Only book owner can update.");
         }
         book.setShareable(!book.isShareable());
+        bookRepository.save(book);
         return bookId;
     }
 
@@ -126,6 +127,7 @@ public class BookService {
             throw new OperationNotPermittedException("You can not update the archived status. Only book owner can update.");
         }
         book.setArchived(!book.isArchived());
+        bookRepository.save(book);
         return bookId;
     }
 
@@ -139,7 +141,7 @@ public class BookService {
         }
         // Step - 3:- if requester himself is the owner then owner can't borrow his own book ryt.
         User user = ((User)connectedUser.getPrincipal());
-        if(!Objects.equals(book.getOwner().getId(), user.getId())){
+        if(Objects.equals(book.getOwner().getId(), user.getId())){
             throw new OperationNotPermittedException("You can not borrow or return your own book.");
         }
         // Step - 4:- check if book already borrowed by other user.
@@ -154,6 +156,7 @@ public class BookService {
                 .returned(false)
                 .returnApproved(false)
                 .build();
+        System.out.println(bookTransactionHistory.getCreatedAt());
         return transactionHistoryRepository.save(bookTransactionHistory).getId();
     }
 

@@ -117,14 +117,16 @@ public class AuthenticationService {
         Token savedToken = tokenRepository.findByToken(token)
                 .orElseThrow(()->new RuntimeException("Invalid Token"));
         if(LocalDateTime.now().isAfter(savedToken.getExpiresAt())){
-            sendValidationEmail(savedToken.getUser());
+            sendValidationEmail(savedToken.getUser()); // Send a new email with a new token
             throw new RuntimeException("Activation token has expired. A new token has been sent to the same mail address.");
         }
+
+        // Activate the user account
         var user = userRepository.findById(savedToken.getUser().getId())
                 .orElseThrow(()->new UsernameNotFoundException("User not found!!"));
-        user.setAccountEnabled(true);
-        userRepository.save(user);
-        savedToken.setValidatedAt(LocalDateTime.now());
-        tokenRepository.save(savedToken);
+        user.setAccountEnabled(true); // Enable the user account
+        userRepository.save(user);    // Save the updated user
+        savedToken.setValidatedAt(LocalDateTime.now()); // Update token as validated
+        tokenRepository.save(savedToken); // Save the validated token
     }
 }
