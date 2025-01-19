@@ -8,13 +8,14 @@ The backend of the Book Social Network project is responsible for handling all s
 ## Table of Contents
 - [Technologies Used](#technologies-used)
 - [Project Structure](#project-structure)
-- [Setup](#setup)
+- [Setup](#setup-instructions)
 - [API Endpoints](#api-endpoints)
 - [Security](#security)
 - [Testing](#testing)
 - [Deployment](#deployment)
 - [Contributing](#contributing)
 - [License](#license)
+- [Resources](#resources)
 
 ## **Brief Overview:**
 - User Authentication and Authorization
@@ -94,7 +95,7 @@ The backend of the Book Social Network project is responsible for handling all s
    - Clear and consistent API endpoints for smooth integration and usage.
    - Swagger Documentation:- Provides comprehensive API documentation using Swagger, allowing users to explore and test the API endpoints.
 
-## **Technical Stack**
+## **Technologies Used**
 
 ![Java](https://img.shields.io/badge/java-%23ED8B00.svg?style=for-the-badge&logo=openjdk&logoColor=white)
 ![Spring](https://img.shields.io/badge/spring-%236DB33F.svg?style=for-the-badge&logo=spring&logoColor=white)

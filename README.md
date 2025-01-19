@@ -3,13 +3,13 @@
 [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=olexiy_book-social-network&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=olexiy_book-social-network)
 [![Known Vulnerabilities](https://snyk.io/test/github/olexiy/book-social-network/badge.svg)](https://snyk.io/test/github/olexiy/book-social-network) -->
 
-## Table of Contents
+## 📋 Table of Contents
 
 - [Overview](#overview)
 - [Features](#features)
 - [Technologies Used](#technologies-used)
-    - [Backend (book-social-network)](#backend-book-social-network)
-    - [Frontend (book-social-network-ui)](#frontend-book-social-network-ui)
+    - [Backend (book-social-network)](#backend-book-network-backend)
+    - [Frontend (book-social-network-ui)](#frontend-book-network-ui)
 - [Learning Objectives](#learning-objectives)
 - [License](#license)
 - [Getting Started](#getting-started)
@@ -61,7 +61,7 @@ Book Social Network is a full-stack application that enables users to manage the
 ![Frontend Pipeline Flow](images/fe-pipeline.png)
 
 
-## 🛠️ Technology Stack
+## 🛠️ Technologies Used
 
 <p align="left">
   <a href="https://skillicons.dev">
