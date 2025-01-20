@@ -27,7 +27,7 @@ FROM amazoncorretto:17
 # This is for the runtime environment
 # define few things
 ARG PROFILE=dev
-ARG APP_VERSION=1.0.1
+ARG APP_VERSION=1.0.0
 
 # create seperate directory in server
 WORKDIR /app

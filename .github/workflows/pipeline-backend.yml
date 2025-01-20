@@ -14,7 +14,7 @@ on:
 
 jobs:
   compile:
-    runs-on: ubuntu
+    runs-on: ubuntu-latest
     # This is my 1st job name of compilation of project.
     name: Compile the Project
     # below are hte steps needs to be performed under this job run
@@ -41,7 +41,7 @@ jobs:
 
   # 2nd job
   unit-tests:
-    runs-on: ubuntu
+    runs-on: ubuntu-latest
     name: Unit tests
     steps:
       - name: Checkout code
@@ -62,7 +62,7 @@ jobs:
 
   # 3rd job
   build:
-    runs-on: ubuntu
+    runs-on: ubuntu-latest
     name: Build Backend
     needs: [compile, unit-tests]
     steps:
@@ -85,7 +85,7 @@ jobs:
   # 4th job
   build-image:
     name: Build Docker Image
-    runs-on: ubuntu
+    runs-on: ubuntu-latest
     needs: [build]
     steps:
       - name: Checkout code
@@ -131,7 +131,7 @@ jobs:
   # # 5th job
   # deploy:
   #   name: Deploy Backend
-  #   runs-on: ubuntu
+  #   runs-on: ubuntu-latest
   #   needs: [build-image]
   #   steps:
   #     - name: Create Deployment folder on VM

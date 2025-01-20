@@ -24,7 +24,7 @@ services:
 
  bsn-api:
    container_name: bsn-api
-   image: bsn/bsn:1.0.1
+   image: bsn/bsn
   # #  we can pass environment variable if we want, but since we have already passed default values in dockerfile itself so here is not must to pass.
   #  environment:
   #   - DB_URL
@@ -35,17 +35,19 @@ services:
    networks:
      - spring-demo
    depends_on:
-     - postgres
+      postgres:
+        condition: service_healthy
 
  bsn-ui:
     container_name: bsn-ui
-    image: bsn/bsn-ui:1.0.0
+    image: bsn/bsn-ui
     ports:
       - 8080:80
     networks:
       - spring-demo
     depends_on:
-      - bsn-api
+      bsn-api:
+        condition: service_healthy
 
 networks:
  spring-demo:
