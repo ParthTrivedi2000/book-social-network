@@ -57,6 +57,9 @@ jobs:
           java-version: 17
           distribution: 'corretto'
 
+      - name: Debug current directory
+        run: pwd
+
       - name: Load environment variables from .env file
         # Source the .env file located in ./backend_code/.env
         run: |
