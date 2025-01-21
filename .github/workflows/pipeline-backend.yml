@@ -61,7 +61,7 @@ jobs:
         # Source the .env file located in ./backend_code/.env
         run: |
           set -o allexport
-          source ./book-network-backend/.env
+          source book-network-backend/.env
           set +o allexport
 
 
