@@ -9,20 +9,38 @@ FROM maven:3.8.7-openjdk-18 AS build
 # Creating folder on the server machine to dump code into it
 WORKDIR /build
 # 1st copy com.xml file into it
-COPY pom.xml .
+COPY ./book-network-backend/pom.xml .
 
-RUN mvn dependency:go-offline
-# then copy src folder from repo and dump it's files into /build/src on server
-COPY src ./src
+#RUN mvn dependency:go-offline
+## then copy src folder from repo and dump it's files into /build/src on server
+COPY ./book-network-backend/src ./src
+#COPY . .
 
-ENV DB_URL=jdbc:postgresql://host.docker.internal:5433/book_social_network
-ENV USER_NAME=username
-ENV PASSWORD=password
+#ENV DB_URL=jdbc:postgresql://host.docker.internal:5433/book_social_network
+#ENV USER_NAME=username
+#ENV PASSWORD=password
 
 # Create packaging of our application
-RUN mvn clean package -DSkipTests
+# RUN mvn clean package -DSkipTests
 
 # RUN mvn -f /usr/src/app/pom.xml clean package -DSkipTests
+
+COPY .env .env
+## Load environment variables from .env file and run Maven commands
+#RUN export $(cat .env | xargs) && mvn clean package -DskipTests
+
+# Accept build arguments
+ARG DB_URL
+ARG USER_NAME
+ARG PASSWORD
+
+# Set environment variables inside the container
+ENV DB_URL=${DB_URL}
+ENV USER_NAME=${USER_NAME}
+ENV PASSWORD=${PASSWORD}
+
+RUN mvn clean package -DskipTests
+
 
 # RunTime Stage
 # downloading JDK 1st to run any java application
@@ -54,5 +72,5 @@ EXPOSE 8088
 ENV ACTIVE_PROFILE=${PROFILE}
 ENV JAR_VERSION=${APP_VERSION}
 
-#CMD java -jar -Dspring.profiles.active=${ACTIVE_PROFILE} -Dspring.datasource.url=${DB_URL} trial.jar
+#CMD java -jar -Dspring.profiles.active=${ACTIVE_PROFILE} trial.jar
 CMD java -jar -Dspring.profiles.active=${ACTIVE_PROFILE} -Dspring.datasource.url=${DB_URL} -Dspring.datasource.username=${USER_NAME} -Dspring.datasource.password=${PASSWORD} trial.jar
