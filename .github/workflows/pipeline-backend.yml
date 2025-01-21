@@ -61,11 +61,17 @@ jobs:
         run: pwd
 
       - name: Load environment variables from .env file
-        # Source the .env file located in ./backend_code/.env
+        # Navigate to the root of the repository and source the .env file and fetch values
         run: |
-          set -o allexport
-          source book-network-backend/.env
-          set +o allexport
+          cd $GITHUB_WORKSPACE/book-network-backend
+          if [ -f .env ]; then
+            set -o allexport
+            source .env
+            set +o allexport
+          else
+            echo ".env file not found in ./book-network-backend/.env"
+            exit 1
+          fi
 
 
       - name: Running the Unit tests
