@@ -133,7 +133,7 @@ jobs:
       - name: Build & Push to Dockerhub
         uses: docker/build-push-action@v5
         with:
-          context: book-social-backend
+          context: book-network-backend
           file: docker/backend/Dockerfile
           push: true
           platforms: linux/amd64
