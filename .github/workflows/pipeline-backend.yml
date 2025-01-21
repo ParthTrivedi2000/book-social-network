@@ -41,23 +41,35 @@ jobs:
           cd book-network-backend
           ./mvnw clean compile
 
-#  # 2nd job
-#  unit-tests:
-#    runs-on: ubuntu-latest
-#    name: Unit tests
-#    steps:
-#      - name: Checkout code
-#        uses: actions/checkout@v4
-#        with:
-#          fetch-depth: 0
-#
-#      - name: Setup JDK
-#        uses: actions/setup-java@v4
-#        with:
-#          java-version: 17
-#          distribution: 'corretto'
-#
-#      - name: Load environment variables from .env file
+  # 2nd job
+  unit-tests:
+    runs-on: ubuntu-latest
+    name: Unit tests
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      # Manually upload the .env file (example)
+      - name: Upload .env file artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: env-file
+          path: ./book-network-backend/.env
+
+      - name: Setup JDK
+        uses: actions/setup-java@v4
+        with:
+          java-version: 17
+          distribution: 'corretto'
+
+      - name: Download .env file
+        uses: actions/download-artifact@v3
+        with:
+          name: env-file
+
+      - name: Load environment variables from .env file
 #        # Navigate to the root of the repository and source the .env file and fetch values
 #        run: |
 #          cd $GITHUB_WORKSPACE/book-network-backend
@@ -69,16 +81,21 @@ jobs:
 #            echo ".env file not found in ./book-network-backend/.env"
 #            exit 1
 #          fi
-#
-#
-#      - name: Running the Unit tests
-#        env:
-#          DB_URL: ${{ secrets.DB_URL }}  # Optional: You can override with secrets if needed
-#          USER_NAME: ${{ secrets.USER_NAME }}  # Optional: You can override with secrets if needed
-#          PASSWORD: ${{ secrets.PASSWORD }}  # Optional: You can override with secrets if needed
-#        run: |
-#          cd book-network-backend
-#          ./mvnw clean test
+
+        # Now that the .env file is downloaded, source it
+        run: |          
+          set -o allexport
+          source ./book-network-backend/.env
+          set +o allexport
+
+      - name: Running the Unit tests
+        env:
+          DB_URL: ${{ secrets.DB_URL }}  # Optional: You can override with secrets if needed
+          USER_NAME: ${{ secrets.USER_NAME }}  # Optional: You can override with secrets if needed
+          PASSWORD: ${{ secrets.PASSWORD }}  # Optional: You can override with secrets if needed
+        run: |
+          cd book-network-backend
+          ./mvnw clean test
 
   # 3rd job
   build:
