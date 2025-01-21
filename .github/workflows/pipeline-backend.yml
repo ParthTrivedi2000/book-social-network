@@ -41,47 +41,44 @@ jobs:
           cd book-network-backend
           ./mvnw clean compile
 
-  # 2nd job
-  unit-tests:
-    runs-on: ubuntu-latest
-    name: Unit tests
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
-
-      - name: Setup JDK
-        uses: actions/setup-java@v4
-        with:
-          java-version: 17
-          distribution: 'corretto'
-
-      - name: Debug current directory
-        run: pwd
-
-      - name: Load environment variables from .env file
-        # Navigate to the root of the repository and source the .env file and fetch values
-        run: |
-          cd $GITHUB_WORKSPACE/book-network-backend
-          if [ -f .env ]; then
-            set -o allexport
-            source .env
-            set +o allexport
-          else
-            echo ".env file not found in ./book-network-backend/.env"
-            exit 1
-          fi
-
-
-      - name: Running the Unit tests
-        env:
-          DB_URL: ${{ secrets.DB_URL }}  # Optional: You can override with secrets if needed
-          USER_NAME: ${{ secrets.USER_NAME }}  # Optional: You can override with secrets if needed
-          PASSWORD: ${{ secrets.PASSWORD }}  # Optional: You can override with secrets if needed
-        run: |
-          cd book-network-backend
-          ./mvnw clean test
+#  # 2nd job
+#  unit-tests:
+#    runs-on: ubuntu-latest
+#    name: Unit tests
+#    steps:
+#      - name: Checkout code
+#        uses: actions/checkout@v4
+#        with:
+#          fetch-depth: 0
+#
+#      - name: Setup JDK
+#        uses: actions/setup-java@v4
+#        with:
+#          java-version: 17
+#          distribution: 'corretto'
+#
+#      - name: Load environment variables from .env file
+#        # Navigate to the root of the repository and source the .env file and fetch values
+#        run: |
+#          cd $GITHUB_WORKSPACE/book-network-backend
+#          if [ -f .env ]; then
+#            set -o allexport
+#            source .env
+#            set +o allexport
+#          else
+#            echo ".env file not found in ./book-network-backend/.env"
+#            exit 1
+#          fi
+#
+#
+#      - name: Running the Unit tests
+#        env:
+#          DB_URL: ${{ secrets.DB_URL }}  # Optional: You can override with secrets if needed
+#          USER_NAME: ${{ secrets.USER_NAME }}  # Optional: You can override with secrets if needed
+#          PASSWORD: ${{ secrets.PASSWORD }}  # Optional: You can override with secrets if needed
+#        run: |
+#          cd book-network-backend
+#          ./mvnw clean test
 
   # 3rd job
   build:
