@@ -51,48 +51,17 @@ jobs:
         with:
           fetch-depth: 0
 
-      # Manually upload the .env file (example)
-      - name: Upload .env file artifact
-        uses: actions/upload-artifact@v3
-        with:
-          name: env-file
-          path: ./book-network-backend/.env
-
       - name: Setup JDK
         uses: actions/setup-java@v4
         with:
           java-version: 17
           distribution: 'corretto'
 
-      - name: Download .env file
-        uses: actions/download-artifact@v3
-        with:
-          name: env-file
-
-      - name: Load environment variables from .env file
-#        # Navigate to the root of the repository and source the .env file and fetch values
-#        run: |
-#          cd $GITHUB_WORKSPACE/book-network-backend
-#          if [ -f .env ]; then
-#            set -o allexport
-#            source .env
-#            set +o allexport
-#          else
-#            echo ".env file not found in ./book-network-backend/.env"
-#            exit 1
-#          fi
-
-        # Now that the .env file is downloaded, source it
-        run: |          
-          set -o allexport
-          source ./book-network-backend/.env
-          set +o allexport
-
       - name: Running the Unit tests
         env:
           DB_URL: ${{ secrets.DB_URL }}  # Optional: You can override with secrets if needed
-          USER_NAME: ${{ secrets.USER_NAME }}  # Optional: You can override with secrets if needed
-          PASSWORD: ${{ secrets.PASSWORD }}  # Optional: You can override with secrets if needed
+          USER_NAME: ${{ secrets.DB_USERNAME }}  # Optional: You can override with secrets if needed
+          PASSWORD: ${{ secrets.DB_PASSWORD }}  # Optional: You can override with secrets if needed
         run: |
           cd book-network-backend
           ./mvnw clean test
@@ -115,6 +84,10 @@ jobs:
           distribution: 'corretto'
 
       - name: Build Backend Project
+        env:
+          DB_URL: ${{ secrets.DB_URL }}
+          USER_NAME: ${{ secrets.DB_USERNAME }}
+          PASSWORD: ${{ secrets.DB_PASSWORD }}
         run: |
           cd book-network-backend
           ./mvnw clean package
@@ -137,6 +110,10 @@ jobs:
           distribution: 'corretto'
 
       - name: Build Backend Project
+        env:
+          DB_URL: ${{ secrets.DB_URL }}
+          USER_NAME: ${{ secrets.DB_USERNAME }}
+          PASSWORD: ${{ secrets.DB_PASSWORD }}
         run: |
           cd book-network-backend
           ./mvnw clean package
