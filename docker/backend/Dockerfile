@@ -9,11 +9,11 @@ FROM maven:3.8.7-openjdk-18 AS build
 # Creating folder on the server machine to dump code into it
 WORKDIR /build
 # 1st copy com.xml file into it
-COPY ./book-network-backend/pom.xml .
+COPY pom.xml .
 
 #RUN mvn dependency:go-offline
 ## then copy src folder from repo and dump it's files into /build/src on server
-COPY ./book-network-backend/src ./src
+COPY src ./src
 #COPY . .
 
 #ENV DB_URL=jdbc:postgresql://host.docker.internal:5433/book_social_network

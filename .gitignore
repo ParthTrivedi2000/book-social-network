@@ -1,7 +1,9 @@
+
+book-network-backend/.env
+
 ### IntelliJ IDEA ###
 .idea
 *.iws
 *.iml
 *.ipr
 .uploads
-.env

@@ -119,8 +119,8 @@ jobs:
       - name: Build & Push to Dockerhub
         uses: docker/build-push-action@v5
         with:
-          context: book-social-network
-          file: book-network-backend/docker/backend/Dockerfile
+          context: book-social-backend
+          file: docker/backend/Dockerfile
           push: true
           platforms: linux/amd64
           tags: ${{secrets.DOCKERHUB_USERNAME}}/bsn-api:${{steps.extract_version.outputs.VERSION}},${{secrets.DOCKERHUB_USERNAME}}/bsn-api:latest
