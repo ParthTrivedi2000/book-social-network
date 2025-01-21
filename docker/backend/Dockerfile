@@ -25,7 +25,7 @@ COPY src ./src
 
 # RUN mvn -f /usr/src/app/pom.xml clean package -DSkipTests
 
-COPY .env .env
+#COPY .env .env
 ## Load environment variables from .env file and run Maven commands
 #RUN export $(cat .env | xargs) && mvn clean package -DskipTests
 
