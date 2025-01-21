@@ -15,9 +15,14 @@ RUN mvn dependency:go-offline
 # then copy src folder from repo and dump it's files into /build/src on server
 COPY src ./src
 
+ENV DB_URL=jdbc:postgresql://host.docker.internal:5433/book_social_network
+ENV USER_NAME=username
+ENV PASSWORD=password
+
 # Create packaging of our application
 RUN mvn clean package -DSkipTests
 
+# RUN mvn -f /usr/src/app/pom.xml clean package -DSkipTests
 
 # RunTime Stage
 # downloading JDK 1st to run any java application
@@ -41,9 +46,13 @@ COPY --from=build /build/target/book-network-*.jar /app/trial.jar
 EXPOSE 8088
 
 # Set DB_URL at runtime so the app can use it
-ENV DB_URL=jdbc:postgresql://host.docker.internal:5440/book_social_network
+#ENV DB_URL=jdbc:postgresql://host.docker.internal:5440/book_social_network
+#ENV DB_URL=jdbc:postgresql://postgres:5432/book_social_network
+#ENV USER_NAME=username
+#ENV PASSWORD=password
 # Now, this is available when the container is running
 ENV ACTIVE_PROFILE=${PROFILE}
 ENV JAR_VERSION=${APP_VERSION}
 
-CMD java -jar -Dspring.profiles.active=${ACTIVE_PROFILE} -Dspring.datasource.url=${DB_URL} trial.jar
+#CMD java -jar -Dspring.profiles.active=${ACTIVE_PROFILE} -Dspring.datasource.url=${DB_URL} trial.jar
+CMD java -jar -Dspring.profiles.active=${ACTIVE_PROFILE} -Dspring.datasource.url=${DB_URL} -Dspring.datasource.username=${USER_NAME} -Dspring.datasource.password=${PASSWORD} trial.jar
