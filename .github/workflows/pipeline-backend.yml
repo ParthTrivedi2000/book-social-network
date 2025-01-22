@@ -235,9 +235,9 @@ jobs:
           ssh-add key.pem
           ssh-keyscan -H ${{ secrets.EC2_HOST }} >> ~/.ssh/known_hosts
           ssh -i key.pem ${{ secrets.EC2_USER }}@${{ secrets.EC2_HOST }} <<EOF
-          export DB_URL=${{ secrets.DB_URL }}
-          export USER_NAME=${{ secrets.DB_USERNAME }}
-          export PASSWORD=${{ secrets.DB_PASSWORD }}
+          export DB_URL="${{ secrets.DB_URL }}"
+          export USER_NAME="${{ secrets.DB_USERNAME }}"
+          export PASSWORD="${{ secrets.DB_PASSWORD }}"
           cd ci-cd
           docker-compose -f docker-compose.yml pull -q
           docker-compose -f docker-compose.yml up -d
