@@ -22,35 +22,26 @@ services:
 
  mail-dev:
    container_name: mail-dev-bsn
-   image: maildev/maildev
+   image: maildev/maildev:latest
    ports:
      - 1080:1080
      - 1025:1025
 
  bsn-api:
    container_name: bsn-api
-   image: ${DOCKERHUB_USERNAME}/bsn
-#   env_file:
-#     - book-network-backend/.env
-  # #  we can pass environment variable if we want, but since we have already passed default values in dockerfile itself so here is not must to pass.
+   image: ${DOCKERHUB_USERNAME}/bsn:latest
    environment:
      DB_URL: ${DB_URL}
      USER_NAME: ${USER_NAME}
      PASSWORD: ${PASSWORD}
-#     - ACTIVE_PROFILE
-#     - APP_VERSION
    ports:
      - 8088:8088
    networks:
      - spring-demo
-#   depends_on:
-#      postgres:
-#        condition: service_healthy
 
  bsn-ui:
     container_name: bsn-ui
-#    image: ${DOCKERHUB_USERNAME}/bsn-ui
-    image: parthchamp17/bsn-ui:0.1.0
+    image: ${DOCKERHUB_USERNAME}/bsn-ui:latest
     ports:
       - 8080:80
     networks:
