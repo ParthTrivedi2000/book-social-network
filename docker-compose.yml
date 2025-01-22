@@ -29,7 +29,7 @@ services:
 
  bsn-api:
    container_name: bsn-api
-   image: bsn/bsn
+   image: ${DOCKERHUB_USERNAME}/bsn
 #   env_file:
 #     - book-network-backend/.env
   # #  we can pass environment variable if we want, but since we have already passed default values in dockerfile itself so here is not must to pass.
@@ -49,7 +49,7 @@ services:
 
  bsn-ui:
     container_name: bsn-ui
-    image: bsn/bsn-ui
+    image: ${DOCKERHUB_USERNAME}/bsn-ui
     ports:
       - 8080:80
     networks:
