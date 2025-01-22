@@ -49,7 +49,8 @@ services:
 
  bsn-ui:
     container_name: bsn-ui
-    image: ${DOCKERHUB_USERNAME}/bsn-ui
+#    image: ${DOCKERHUB_USERNAME}/bsn-ui
+    image: parthchamp17/bsn-ui:0.1.0
     ports:
       - 8080:80
     networks:
