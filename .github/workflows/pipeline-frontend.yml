@@ -42,7 +42,7 @@ jobs:
           file: docker/frontend/Dockerfile
           push: true
           platforms: linux/amd64
-          tags: ${{secrets.DOCKERHUB_USERNAME}}/bsn-ui:${{steps.extract_version.outputs.VERSION}},${{secrets.DOCKERHUB_USERNAME}}/bsn-ui:latest
+          tags: ${{secrets.DOCKERHUB_USERNAME}}/bsn-ui:latest,${{secrets.DOCKERHUB_USERNAME}}/bsn-ui:${{steps.extract_version.outputs.VERSION}}
 
   # deploy:
   #   name: Deploy Frontend
@@ -95,10 +95,6 @@ jobs:
           ls -la  # List files in the current directory to verify the presence of docker-compose.yml
           scp -oStrictHostKeyChecking=no $GITHUB_WORKSPACE/docker-compose.yml ${{ secrets.EC2_USER }}@${{ secrets.EC2_HOST }}:ci-cd/docker-compose.yml
 
-      - name: Login to Docker Hub
-        run: |
-          echo ${{ secrets.DOCKERHUB_TOKEN }} | docker login -u ${{ secrets.DOCKERHUB_USERNAME }} --password-stdin
-
       - name: Set ENV variable and deploy
         run: |
           echo "${{ secrets.EC2_SSH_PRIVATE_KEY }}" > key.pem
@@ -107,10 +103,8 @@ jobs:
           ssh-add key.pem
           ssh-keyscan -H ${{ secrets.EC2_HOST }} >> ~/.ssh/known_hosts
           ssh -i key.pem ${{ secrets.EC2_USER }}@${{ secrets.EC2_HOST }} <<EOF
-          export DB_URL="${{ secrets.DB_URL }}"
-          export USER_NAME="${{ secrets.DB_USERNAME }}"
-          export PASSWORD="${{ secrets.DB_PASSWORD }}"
+          export DOCKERHUB_USERNAME=${{ secrets.DOCKERHUB_USERNAME }}
           cd ci-cd
-          sudo docker-compose -f docker-compose.yml pull -q
-          sudo docker-compose -f docker-compose.yml up -d
+          docker-compose -f docker-compose.yml pull -q
+          docker-compose -f docker-compose.yml up -d
           EOF
