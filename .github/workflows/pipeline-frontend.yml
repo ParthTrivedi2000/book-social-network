@@ -115,6 +115,8 @@ jobs:
           export USER_NAME=${{ secrets.DB_USERNAME }}
           export PASSWORD=${{ secrets.DB_PASSWORD }}
           export DOCKERHUB_USERNAME=${{ secrets.DOCKERHUB_USERNAME }}
+          # Construct the REACT_URL using the EC2_HOST secret
+          export REACT_APP_API_URL=http://${{ secrets.EC2_HOST }}:8088/api/v1
           cd ci-cd
           docker-compose -f docker-compose.yml pull -q
           docker-compose -f docker-compose.yml up -d
