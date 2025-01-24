@@ -2,7 +2,7 @@ import axios from 'axios';
 
 // Create the Axios instance with a base URL for your API
 const interceptorInstance = axios.create({
-  baseURL: process.env.REACT_APP_API_URL || 'http://localhost:8088/api/v1',  // Change to your actual backend API URL
+  baseURL: process.env.REACT_APP_API_URL || 'http://13.203.66.205:8088/api/v1',  // Change to your actual backend API URL
 });
 
 // Request interceptor to add the Authorization token
