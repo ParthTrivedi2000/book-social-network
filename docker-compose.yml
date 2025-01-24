@@ -23,7 +23,7 @@ services:
     container_name: bsn-ui
     image: ${DOCKERHUB_USERNAME}/bsn-ui:latest
     environment:
-      REACT_APP_API_URL=http://${EC2_HOST}:8088/api/v1
+      REACT_APP_API_URL: ${REACT_APP_API_URL}
     ports:
       - 8080:80
     networks:
