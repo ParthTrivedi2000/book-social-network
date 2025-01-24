@@ -71,6 +71,8 @@ jobs:
           push: true
           platforms: linux/amd64
           tags: ${{secrets.DOCKERHUB_USERNAME}}/bsn-ui:latest,${{secrets.DOCKERHUB_USERNAME}}/bsn-ui:${{steps.extract_version.outputs.VERSION}}
+          build-args: |
+            REACT_APP_API_URL=http://${{ secrets.EC2_HOST }}:8088/api/v1
 
   deploy:
     name: Deploy Frontend
