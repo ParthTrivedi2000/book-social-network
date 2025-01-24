@@ -27,6 +27,9 @@ public class BeansConfig {
 
     private final UserDetailsService userDetailsService;
 
+    @Value("${application.cors.origins:*}")
+    private List<String> allowedOrigin;
+
     @Bean
     public AuthenticationProvider authenticationProvider(){
         DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
@@ -54,14 +57,14 @@ public class BeansConfig {
     public CorsFilter corsFilter(){
         final UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         final CorsConfiguration config = new CorsConfiguration();
-        config.setAllowCredentials(true);
-        config.setAllowedOrigins(List.of("http://localhost:3000", "http://localhost:8080"));
+        // config.setAllowCredentials(true);
+        config.setAllowedOrigins(allowedOrigin);
+        //config.setAllowedOrigins(List.of("http://localhost:3000", "http://localhost:8080"));
         config.setAllowedHeaders(Arrays.asList(
                 ORIGIN,
                 CONTENT_TYPE,
                 ACCEPT,
                 AUTHORIZATION
-
         ));
         config.setAllowedMethods(Arrays.asList(
                 "GET",
@@ -70,6 +73,8 @@ public class BeansConfig {
                 "DELETE",
                 "PATCH"
         ));
+        // config.setAllowedHeaders(Arrays.asList("*"));
+        // config.setAllowedMethods(Arrays.asList("*"));
         source.registerCorsConfiguration("/**", config);
         return new CorsFilter(source);
     }
