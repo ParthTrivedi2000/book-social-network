@@ -18,7 +18,7 @@ spring:
     database: postgresql
     database-platform: org.hibernate.dialect.PostgreSQLDialect
   mail:
-    host: host.docker.internal
+    host: 13.203.66.205
     port: 1025
     username: parth
     password: parth
