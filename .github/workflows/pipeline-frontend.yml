@@ -23,11 +23,11 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v2
-
-      - name: Set up Docker
-        uses: docker/setup-docker@v2
+#      - name: Set up Docker Buildx
+#        uses: docker/setup-buildx-action@v2
+#
+#      - name: Set up Docker
+#        uses: docker/setup-docker@v2
 
       # Cache Node modules
       - name: Cache Node modules

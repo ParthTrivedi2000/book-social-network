@@ -130,11 +130,11 @@ jobs:
           java-version: 17
           distribution: 'corretto'
 
-      - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v2
-
-      - name: Set up Docker
-        uses: docker/setup-docker@v2
+#      - name: Set up Docker Buildx
+#        uses: docker/setup-buildx-action@v2
+#
+#      - name: Set up Docker
+#        uses: docker/setup-docker@v2
 
       - name: Build Backend Project
         env:
